@@ -1,0 +1,2 @@
+22f7428f986c431b02c96084a556a3578fdfc1c97ac0d09ab811565ec25ee75e  ./target/wasm32-unknown-unknown/release/cw721_base.wasm
+fa39fbcebe6a6eea47d9e2fc4bf48a80f47de627c245a2d4a3316dccbaf5fae2  ./target/wasm32-unknown-unknown/release/test.wasm
