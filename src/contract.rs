@@ -1,6 +1,6 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, SubMsg};
+use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, CosmosMsg, SubMsg};
 
 use crate::error::ContractError;
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg, CustomMsg};
@@ -26,14 +26,18 @@ pub fn execute(
     msg: ExecuteMsg,
 ) -> Result<Response<CustomMsg>, ContractError> {
     match msg {
-        ExecuteMsg::Test { tx } => test(deps, tx),
+        ExecuteMsg::Test { type_url, value } => test(deps, type_url, value),
     }
 }
 
-pub fn test(_deps: DepsMut, tx: String) -> Result<Response<CustomMsg>, ContractError> {
+pub fn test(_deps: DepsMut, type_url: String, value: String) -> Result<Response<CustomMsg>, ContractError> {
+    let msg = CosmosMsg::Stargate { 
+        type_url: type_url, 
+        value: to_binary(&value)?,
+    };
     Ok(Response::new()
         .add_attribute("method", "test")
-        .add_submessage(SubMsg::new(CustomMsg::Raw(Binary(tx.into_bytes())))))
+        .add_submessage(SubMsg::new(msg)))
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
