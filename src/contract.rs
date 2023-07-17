@@ -33,7 +33,7 @@ pub fn execute(
 pub fn test(_deps: DepsMut, type_url: String, value: String) -> Result<Response<CustomMsg>, ContractError> {
     let msg = CosmosMsg::Stargate { 
         type_url: type_url, 
-        value: to_binary(&value)?,
+        value: Binary::from(value.as_bytes()),
     };
     Ok(Response::new()
         .add_attribute("method", "test")
