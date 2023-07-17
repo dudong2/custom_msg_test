@@ -56,8 +56,6 @@ pub fn bank_send(env: Env, recipient: String, amount: Uint128) -> Result<Respons
     }
     .into();
 
-    // Ok(Response::new()
-    //     .add_submessage(msg: SubMsg::new(msg)))
     Ok(Response::new()
         .add_message(msg)
         .add_attribute("method", "bank_send"))
